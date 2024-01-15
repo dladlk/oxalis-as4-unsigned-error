@@ -13,10 +13,11 @@
     </appender>
     
     <logger name="network.oxalis.as4.util.PolicyService" level="debug"/>
+    
+    <logger name="network.oxalis.as4.outbound" level="info"/>
 
-	<logger name="org.apache.cxf.phase.PhaseInterceptorChain" level="trace">
-		<appender-ref ref="STDOUT"/>
-	</logger>
+	<!-- CXF works with java.util.logging Logger - but I did not manage to activate it via logback, even with contextListener  -->
+	<logger name="org.apache.cxf.phase.PhaseInterceptorChain" level="trace"/>
 
     <root level="warn">
         <appender-ref ref="STDOUT"/>
