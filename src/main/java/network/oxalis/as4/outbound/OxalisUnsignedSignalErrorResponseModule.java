@@ -15,6 +15,8 @@ public class OxalisUnsignedSignalErrorResponseModule extends OxalisModule {
 
 	@Override
 	protected void configure() {
+		// Dirty hack to install interceptor AFTER default Bus is initialized in As4CommonModule
+
 		Thread t = new Thread("OxalisUnsignedSignalErrorResponseInInterceptor installer") {
 			public void run() {
 				int count = 0;
@@ -30,7 +32,7 @@ public class OxalisUnsignedSignalErrorResponseModule extends OxalisModule {
 						break;
 					}
 				}
-				log.warn("Thread stopped after " + count + " attempts");
+				log.warn("Thread finished after " + count + " attempts");
 			}
 		};
 		log.warn("Start temporary thread to wait for CXF Bus initialization to register OxalisUnsignedSignalErrorResponseInInterceptor, repeat each " + SLEEP_INTERVAL + " ms up to " + MAX_ATTEMPTS + " times");

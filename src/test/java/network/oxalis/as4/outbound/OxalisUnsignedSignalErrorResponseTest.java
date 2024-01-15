@@ -114,22 +114,7 @@ public class OxalisUnsignedSignalErrorResponseTest {
 	}
 
 	private Injector getInjector() {
-		return Guice.createInjector(
-				// new As4InboundModule(),
-				new GuiceModuleLoader()
-		// ,
-		// new AbstractModule() {
-		// Modules.override(new GuiceModuleLoader()).with(new AbstractModule() {
-		// @Override
-		// protected void configure() {
-		// bind(ReceiptPersister.class).toInstance((m, p) -> {
-		// System.out.println (p + " " + m);
-		//// });
-		// bind(InboundService.class).toInstance((m) -> { });
-		// bind(MessageIdGenerator.class).toInstance(new DefaultMessageIdGenerator("test.com"));
-		// }
-		// }
-		);
+		return Guice.createInjector(new GuiceModuleLoader());
 	}
 
 	public static class UnsignedResponseServlet extends HttpServlet {
@@ -150,13 +135,16 @@ public class OxalisUnsignedSignalErrorResponseTest {
 				}
 				String soapXML = new String(baos.toByteArray(), StandardCharsets.UTF_8);
 
+				log.debug("Received SOAP request:");
+				log.debug(soapXML);
+
 				timestamp = extractPart(soapXML, "Timestamp");
 				messageId = extractPart(soapXML, "MessageId");
 
 				log.info("Extracted from incoming SOAP Envlope timestamp=" + timestamp + " and refMessageId=" + messageId);
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.error("Failed to extract Timestamp and MessageId from request", e);
 			}
 			String result = RESPONSE_TEMPLATE;
 			if (timestamp != null && messageId != null) {

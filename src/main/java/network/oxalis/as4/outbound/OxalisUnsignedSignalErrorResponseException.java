@@ -4,6 +4,8 @@ import network.oxalis.as4.lang.AS4Error;
 import network.oxalis.as4.util.AS4ErrorCode;
 import network.oxalis.as4.util.AS4ErrorCode.Severity;
 
+// Extends RuntimeException to be able to throw from Interceptor without wrapping by RuntimeException, but implement AS4Error
+// similar to OxalisAs4TransmissionException
 public class OxalisUnsignedSignalErrorResponseException extends RuntimeException implements AS4Error {
 
 	private static final long serialVersionUID = 4629128621507529575L;
